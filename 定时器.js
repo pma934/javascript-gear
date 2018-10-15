@@ -11,6 +11,8 @@ var timeleter = function (times) {
         
 
 }
-timeleter(2);
-var a = [2,3,4];
-a.map(timeleter);
+//timeleter(2);
+//var a = [2,3,4];
+//a.map(timeleter);
+
+module.exports = timeleter;
