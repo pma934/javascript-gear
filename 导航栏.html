@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <style>
+        .one{
+             border: 0.5px solid blue;
+             width: 100px;
+        }
+        .two{
+            display: none;
+            height: 30px;
+            width: 100px;
+            text-align: center;
+            border: 0.5px solid blue;
+        }
+        .SecondaryMenuSelect::before {
+            content: "➤";
+            position: absolute;
+            left: 10px;
+            font-size: 0.8em;
+            -webkit-text-fill-color: #bf895b;
+            animation: move 1s infinite;
+        }
+        @keyframes move {
+            0%   {left: 17px;}
+            10%  {left: 19px;}
+            20%  {left: 21px;}
+            30%  {left: 22px;}
+            40%  {left: 23px;}
+            50%  {left: 24px;}
+            60%  {left: 22px;}
+            70%  {left: 20px;}
+            80%  {left: 19px;}
+            90%  {left: 18px;}
+            100% {left: 17px;}
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div>
+        <div class="one">一
+            <div class="two">1</div>
+            <div class="two">2</div>
+        </div>
+        <div class="one">二
+            <div class="two">1</div>
+            <div class="two">2</div>
+        </div>
+        <div class="one">三
+            <div class="two">1</div>
+            <div class="two">2</div>
+        </div>   
+    </div>
+</body>
+<script>
+    $(".one").on("mouseover", '.two', function (e) {
+        $(e.target).css("background-color", "#ddd");
+    })
+    $(".one").on("mouseout", function (e) {
+        $(this).children().css("background-color", "white");
+    })
+    $(".one").on("click", function (e) {
+        $(this).children().css("display", "block")
+        $(this).siblings().children().css("display", "none");
+    })
+    $(".one").on("click",'.two', function (e) { 
+       $('.SecondaryMenuSelect').toggleClass('SecondaryMenuSelect')
+       $(e.target).addClass('SecondaryMenuSelect')
+    })
+</script>
+
+</html>

@@ -1,25 +1,25 @@
-function count() {
-    var arr = [];
-    for (var i=1; i<=3; i++) {
-        arr.push((function (n) {
-            return function () {
-                return n * n;
-            }
-        })(i));
+var f1 = function () {
+    return console.log('f1');
+}(); //不是闭包
+
+var f2 = ()=> console.log('f2');
+//闭包
+
+var f3 = ()=> {console.log('f3')};
+
+var templating = (a) => {
+    var env = a;
+    return (ctx) => {
+        chen = ctx * env;
+        console.log(chen);
     }
-    return arr;
 }
+f2();
+f3();
 
-var results = count();
-var f1 = results[0];
-var f2 = results[1];
-var f3 = results[2];
-
-//console.log(f1()); // 1
-//f2(); // 4
-//f3(); // 9
+var ctx = templating(9);
+ctx(5);
 
 module.exports = {
-    f1:f1,
-    f2:f2,
+
 };

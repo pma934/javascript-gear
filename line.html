@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <style>
+        .canvas_father {
+            position: relative;
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="height:100%;display: grid;grid-template-columns: 200px auto;grid-template-rows: 50px auto;">
+        <div class="canvas_father" style="grid-area: 1/1/2/3;background-color: transparent;">1</div>
+        <div style="grid-area: 2/1/3/2;background-color: #eee;">2</div>
+        <div style="grid-area: 2/2/3/3;background-color: #ddd;">3</div>
+    </div>
+    <script>
+        ! function () {
+            function size_change() {
+                x = u.width = document.querySelector(".canvas_father").clientWidth;
+                y = u.height = document.querySelector(".canvas_father").clientHeight;
+            }
+
+            function mm() {
+                ctx.clearRect(0, 0, x, y);
+                ctx.beginPath();
+                ctx.moveTo(0, y / 2);
+                for (i = 1; i < 100; i++) {
+                    let w = x * i / 100;
+                    let h = 0.5 * y + y * (Math.random() - 0.5) * (1 - (Math.abs(i - 50) / 50));
+                    ctx.strokeStyle = 'red'
+                    ctx.lineWidth = 2
+                    ctx.lineTo(w, h);
+                    ctx.moveTo(w, h);
+                }
+                ctx.lineTo(x, y / 2);
+                ctx.stroke();
+            }
+
+            var u = document.createElement("canvas"),
+                ctx = u.getContext("2d"),
+                x, y;
+            window.ctx = ctx
+
+            u.id = 'canvas';
+            u.style.cssText = "position:absolute;top:0;left:0;z-index:-1;opacity:0.5;"
+
+            document.querySelector(".canvas_father").appendChild(u);
+            size_change();
+            window.onresize = size_change;
+            setInterval(mm, 500)
+
+        }()
+    </script>
+</body>
+
+</html>
