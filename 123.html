@@ -76,7 +76,7 @@
         id: 'node4',
         x: 500,
         y: 300,
-        shape: 'diamond',
+        shape: 'shrink',
       }],
       edges: [{
         source: 'node1',
@@ -243,17 +243,27 @@
 
     //菱形
 
+    // const getDiamond = (width, height) => {
+    //   return [
+    //     ['M', 0, 0 - height / 2], // 上部顶点
+    //     ['L', width / 2, 0], // 右侧点
+    //     ['L', 0, height / 2], // 下部
+    //     ['L', -width / 2, 0], // 左侧
+    //     ['Z'] // 封闭
+    //   ]
+    // }
+
     const getDiamond = (width, height) => {
       return [
-        ['M', 0, 0 - height / 2], // 上部顶点
-        ['L', width / 2, 0], // 右侧点
-        ['L', 0, height / 2], // 下部
-        ['L', -width / 2, 0], // 左侧
+        ['M', -width , -height / 2], // 上部顶点
+        ['L', width, -height / 2], // 右侧点
+        ['L', width*2 / 3, height / 2], // 下部
+        ['L', -width*2 / 3, height / 2], // 左侧
         ['Z'] // 封闭
       ]
     }
 
-    G6.registerNode('diamond', {
+    G6.registerNode('shrink', {
       draw(cfg, group) {
         const size = cfg.size || [40, 40];
         const color = cfg.color || 'black';
