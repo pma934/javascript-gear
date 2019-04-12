@@ -15,7 +15,7 @@
             "type": "node",
             "request": "launch",
             "name": "Solution",
-            "program": "${workspaceFolder}/null.js",
+            "program": "${workspaceFolder}/123.js",
         }
     ]
 }

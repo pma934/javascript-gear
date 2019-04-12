@@ -4,6 +4,7 @@ class PopUpInfo extends HTMLElement {
     // Always call super first in constructor
     super();
 
+    console.log(this.getAttribute('data-text'))
     // Create a shadow root
     const shadow = this.attachShadow({mode: 'open'});
 
