@@ -268,70 +268,24 @@
         });
         return shape;
       },
-      afterDraw(cfg, group) {
-        const size = cfg.size || [40, 40];
-        const color = cfg.color || 'black';
-        var width = size[0];
-        var height = size[1];
-        var back1 = group.addShape('path', {
-          zIndex: -1,
-          attrs: {
-            path: getDiamond(width, height),
-            fill: 'blue',
-            opacity: 0.6
-          }
-        });
-        var back1 = group.addShape('path', {
-          zIndex: -2,
-          attrs: {
-            path: getDiamond(width, height),
-            fill: 'blue',
-            opacity: 0.6
-          }
-        });
-        var back1 = group.addShape('path', {
-          zIndex: -3,
-          attrs: {
-            path: getDiamond(width, height),
-            fill: 'blue',
-            opacity: 0.6
-          }
-        });
-        group.sort();
-        // width = width * 1.5
-        // height = height * 1.5
-
-        // back1.animate({ // 逐渐放大，并消失
-        //   path: getDiamond(width, height),
-        //   opacity: 0.1,
-        //   repeat: true // 循环
-        // }, 3000, 'easeCubic', null, 0); // 无延迟   
-      },
 
       setState(name, value, item) {
         const group = item.getContainer();
         const shape = group.get('children')[0]; // 顺序根据 draw 时确定
-        console.log(group.get('children'))
         if (name === 'running') {
           if (value) {
-            group.get('children').map((x,index) => {
-              if (x._cfg.zIndex < 0) {
-                x.animate({
-                  path: getDiamond(60, 60),
-                  opacity: 0.1,
-                  repeat: true
-                }, 3000, 'easeCubic', null, index*1000);
-              }
-            });
+            shape.animate({
+              path: getDiamond(60, 60),
+              opacity: 0.1,
+              repeat: true
+            }, 1000, 'easeCubic', null, 0);
           } else {
-            group.get('children').map((x) => {
-              if (x._cfg.zIndex < 0) {
-                x.attr({
-                  path: getDiamond(40, 40),
-                })
-                x.stopAnimate();
-              }
-            });
+            shape.stopAnimate();
+            const style = {
+              path: getDiamond(40, 40),
+              opacity: 1,
+            };
+            shape.attr(style);
           }
         }
       }
