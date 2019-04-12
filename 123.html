@@ -268,24 +268,65 @@
         });
         return shape;
       },
+      afterDraw: function afterDraw(cfg, group) {
+        var [width, height] = cfg.size || [40, 40]
+        group.addShape('path', {
+          zIndex: -1,
+          attrs: {
+            path: getDiamond(width, height),
+            fill: 'blue',
+            opacity: 0.6
+          }
+        });
+        group.addShape('path', {
+          zIndex: -2,
+          attrs: {
+            path: getDiamond(width, height),
+            fill: 'blue',
+            opacity: 0.6
+          }
+        });
+        group.addShape('path', {
+          zIndex: -3,
+          attrs: {
+            path: getDiamond(width, height),
+            fill: 'blue',
+            opacity: 0.6
+          }
+        });
+        group.sort();
+      },
 
       setState(name, value, item) {
         const group = item.getContainer();
-        const shape = group.get('children')[0]; // 顺序根据 draw 时确定
+        //const shape = group.get('children')[0]; // 顺序根据 draw 时确定
         if (name === 'running') {
           if (value) {
-            shape.animate({
-              path: getDiamond(60, 60),
-              opacity: 0.1,
-              repeat: true
-            }, 1000, 'easeCubic', null, 0);
+            group.get('children').map((shape, index) => {
+              if (shape._cfg.zIndex < 0) {
+                const style = {
+                  path: getDiamond(60, 60),
+                  opacity: 0.3
+                };
+                shape.attr(style); // 更新属性
+                shape.animate({
+                  path: getDiamond(40, 40),
+                  opacity: 0.1,
+                  repeat: true
+                }, 3000, 'easeCubic', null, index * 1000);
+              }
+            })
           } else {
-            shape.stopAnimate();
-            const style = {
-              path: getDiamond(40, 40),
-              opacity: 1,
-            };
-            shape.attr(style);
+            // const style = {
+            //   path: getDiamond(40, 40),
+            //   opacity: 0.6
+            // };
+            group.get('children').map((shape, index) => {
+              if (shape._cfg.zIndex < 0) {
+                shape.stopAnimate()
+                // shape.attr(style); // 更新属性
+              }
+            })
           }
         }
       }
