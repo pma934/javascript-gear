@@ -3,15 +3,16 @@
 function main(num) {
 
     let res = num.toString()
-    let left = res.slice(0, res.length % 3)
-    if (left.length) {
-        left = left + ','
-    }
-    let right = res.slice(res.length % 3)
-    right = right.replace(/(\d{3})/g, $1 => $1 + ',')
+    // let left = res.slice(0, res.length % 3)
+    // if (left.length) {
+    //     left = left + ','
+    // }
+    // let right = res.slice(res.length % 3)
+    // right = right.replace(/(\d{3})/g, $1 => $1 + ',')
 
 
-    return (left + right).slice(0, -1)
+    //return (left + right).slice(0, -1)
+    return res.length%3?res.replace(/(?=([\d]{3})+$)/g, ','):res.replace(/(?=([\d]{3})+$)/g, ',').slice(1)
 }
 
-var str = main(234567)
+var str = main(123245267)
