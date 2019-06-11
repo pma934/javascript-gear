@@ -13,3 +13,4 @@ console.log(type(type));                // '[object Function]', 'function', true
 console.log(type(new Date()));          // '[object Date]', 'object', true 
 console.log(type(/^\d+$/));             // '[object RegExp]', 'object', true 
 console.log(type(Symbol()));            // '[object Symbol]', 'symbol', false 
+console.log(type(new Promise(()=>{}))); // '[object Promise]', 'object', true 

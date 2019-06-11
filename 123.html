@@ -6,58 +6,78 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
-
 </head>
 
 <body>
-  <div id="div1">
-    <div>
-      <label for="height_input">高度：</label>
-      <input id="height_input" type="text" placeholder="500">
-    </div>
-    <div>
-      <label for="width_input">宽度：</label>
-      <input id="width_input" type="text" placeholder="500">
-    </div>
-    <div>
-      <label for="str_input">内容：</label>
-      <input id="str_input" type="text" placeholder="content">
-    </div>
-    <div>
-      <label for="bgc_input">背景色：</label>
-      <input id="bgc_input" class="jscolor" value="eeeeee">
-    </div>
-    <div>
-      <label for="color_input">文本色：</label>
-      <input id="color_input" class="jscolor" value="000000">
-    </div>
-  </div>
-  <button onclick="creatImg()" class="btn btn-lg btn-success">生成</button>
-  <hr>
-  <div id="div2">
-    <img id="img" src="">
-  </div>
+  <a href="">a</a>
+  <abbr title="123">abbr</abbr>
+  <acronym title="123">acronym</acronym>
+  <address>address</address>
+  <applet>applet</applet>
+  <area shape="circle" coords="180,139,14" href="http://www.w3school.com.cn/example/html/sun.html" alt="Venus" />
+  <big>123</big>
+  <button onclick="loadXMLDoc(`https:\/\/codepen.io/pma934/public/feed`)">Get XML</button>
+  <div id="show"></div>
+
   <script>
-    function creatImg() {
-      $.ajax({
-        url: "http://localhost:3333/mockapi/image",
-        type: 'post',
-        data: {
-          str: $('#str_input').val(),
-          height: $('#height_input').val(),
-          width: $('#width_input').val(),
-          bgc: '#' + $('#bgc_input').val(),
-          color: '#' + $('#color_input').val(),
-        },
-        success: function (res) {
-          $('#img').attr('src', res.data)
-        }
-      })
+    var xmlhttp;
+    var items;
+    function loadXMLDoc(url) {
+      xmlhttp = null;
+      if (window.XMLHttpRequest) {// code for IE7, Firefox, Opera, etc.
+        xmlhttp = new XMLHttpRequest();
+      }
+      else if (window.ActiveXObject) {// code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      if (xmlhttp != null) {
+        xmlhttp.onreadystatechange = state_Change;
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send(null);
+      }
+      else {
+        alert("Your browser does not support XMLHTTP.");
+      }
     }
+
+    function state_Change() {
+      if (xmlhttp.readyState == 4) {// 4 = "loaded"
+        if (xmlhttp.status == 200) {// 200 = "OK"
+          console.log(xmlhttp)
+          show(xmlhttp)
+        }
+        else {
+          alert("Problem retrieving XML data:" + xmlhttp.statusText);
+        }
+      }
+    }
+
+    function show(res) {
+      console.log(res.responseXML.querySelectorAll('item'))
+      xmlhttp = res.responseXML.querySelectorAll('item')
+      items = []
+      for (let i = 0,len = xmlhttp.length; i < len; i++) {
+        items.push({
+          title:xmlhttp[i].querySelector('title').innerHTML,
+          link:xmlhttp[i].querySelector('link').firstChild.nodeValue,
+        })
+      }
+      let show = document.querySelector('#show')
+      for(item of items){
+        console.log(item.link)
+        let iframe = document.createElement('iframe')
+        iframe.setAttribute('src',item.link)
+        iframe.setAttribute('frameborder','0')
+        iframe.setAttribute('scrolling','no')
+        iframe.setAttribute('sandbox',"allow-scripts allow-pointer-lock allow-same-origin")
+        iframe.setAttribute('tabindex',"-1")
+        iframe.setAttribute('style',"opacity: 1;")
+        show.append(iframe)
+        console.log(iframe.attributes)
+      }
+    }
+
+
   </script>
-</body>
 
 </html>
