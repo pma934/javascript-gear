@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body class="post-template-default single single-post postid-467 single-format-standard chinese-font serif isWebKit">
+
+    
+    <script type="text/javascript" src="./live2d.min.js"></script>
+
+
+    <div>
+        <canvas id="live2d" width="280" height="250" class="live2d" style="border: 1px solid blue;"></canvas>
+    </div>
+    <button onclick="switch_pio()">Switch</button>
+    <button onclick="save_pio()">Save</button>
+
+    <script>
+        var userAgent = navigator.userAgent;
+        console.log('userAgent = ' + userAgent);
+        console.log('window inner size: ' + window.innerWidth + ' x ' + window.innerHeight);
+        var isOpera = userAgent.indexOf("Opera") > -1;
+        var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
+        var isEdge = userAgent.indexOf("Edge") > -1;
+        var isSafari = userAgent.indexOf("Safari") > -1;
+        if (isIE || isEdge) {
+            alert("此功能不支持您的浏览器<br>Feature cannot work on your browser");
+        } else if (isChrome) {
+            pio();
+        } else if (isSafari) {
+            alert("此功能不支持您的浏览器<br>Feature cannot work on your browser");
+        } else {
+            pio();
+        }
+
+        function pio() {
+            var num = Math.ceil(Math.random() * 92);
+            console.log(num);
+            Live2D_img_path = './Potion-Maker/Pio/img/1 ('+num+').jpg';
+            loadlive2d("live2d","./Potion-Maker/Pio/model.json" );
+        }
+
+        function switch_pio() {
+            if (isIE || isEdge) {
+                console.log("此功能不支持您的浏览器<br>Feature cannot work on your browser");
+                return false;
+            } else if (isChrome) {
+                pio();
+            } else if (isSafari) {
+                console.log("此功能不支持您的浏览器<br>Feature cannot work on your browser");
+                return false;
+            } else {
+                pio();
+            }
+        }
+
+        function save_pio() {
+            window.Live2D.captureName = 'Screenshot-' + Date.now() + '.png';
+            window.Live2D.captureFrame = true;
+            addComment.createButterbar("保存成功！<br>Screenshot saved!", 1000);
+        }
+
+        document.querySelector("body").onmousedown = (x)=>{
+            console.log(x)
+        }
+    </script>
+</body>
+
+</html>
