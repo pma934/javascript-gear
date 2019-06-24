@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input id="connection" type="text" name="" id=""> <button onclick="onconnection()">连接</button>
+  <input id="send" type="text"> <button onclick="onsend()">发送</button>
+</body>
+<script>
+  var socket;
+  function onconnection() {
+    let url = "ws://localhost:6080"
+    socket = new WebSocket(url)
+    socket.onopen = function () {
+      alert('连接成功')
+    }
+    socket.onerror = function () {
+      alert('连接出错')
+    }
+    socket.onclose = function () {
+      alert('连接关闭')
+    }
+    socket.onmessage = function (msg) {
+      console.log(msg)
+    }
+  }
+  function onsend() {
+    socket.send('你好！')
+  }
+</script>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #show {
+      margin: 1rem 0;
+      display: grid;
+      grid-gap: 1rem;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+  </style>
+</head>
+
+<body>
+  <a href="">a</a>
+  <abbr title="123">abbr</abbr>
+  <acronym title="123">acronym</acronym>
+  <address>address</address>
+  <applet>applet</applet>
+  <area shape="circle" coords="180,139,14" href="http://www.w3school.com.cn/example/html/sun.html" alt="Venus" />
+  <big>123</big>
+
+
+
+
+  <input type="button" onclick="console.log(event.type+' '+this.type)">
+
+  <form id="form">
+    <div><input type="text" pattern="\d+" name="count" onkeypress="check()"><span></span></div>
+    <div><input type="email" onkeypress="check()"><span></span></div>
+    <input type="button" onclick="checkAll()">
+  </form>
+
+  <select onchange="addOption()">
+    <option value="1">NO.1</option>
+    <option>+</option>
+  </select>
+
+  <script>
+    function check() {
+      if (event.target.checkValidity()) {
+        let span = event.target.nextElementSibling
+        span.style.color = 'green'
+        span.innerText = '格式正确'
+      } else {
+        let span = event.target.nextElementSibling
+        span.style.color = 'red'
+        span.innerText = '格式错误'
+      }
+    }
+    function checkAll() {
+      if (document.forms[0].checkValidity()) {
+        alert('提交成功')
+      } else {
+        console.log('无效');
+      }
+    }
+
+    function addOption() {
+      let select = event.target
+      let size = select.childElementCount
+      if (select.selectedIndex == size - 1) {
+        let newO = new Option("NO." + size, size)
+        select.add(newO, size-1)
+        select.selectedIndex = size-1
+      }
+    }
+
+  </script>
+
+</html>

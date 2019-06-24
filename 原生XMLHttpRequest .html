@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>1213213213</p>
+  <div></div>
+  <img src="" alt="" srcset="">
+  <noscript></noscript>
+  <script>
+
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function () {
+      console.log(xhr.readyState)
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200 && xhr.status < 300 || xhr.status === 304) {
+          console.log('XMLHttpRequest:', xhr)
+          console.log(xhr.getAllResponseHeaders())
+          document.querySelector('div').innerHTML = xhr.response
+        }
+      }
+    }
+    xhr.open('get', 'https://codepen.io/popular/feed/', true)
+    xhr.setRequestHeader('Accept', 'application/json, text/plain, */*')
+    xhr.send(null)
+
+    // 图像Ping
+    var img = new Image()
+    img.onload = img.onerror = function () {
+      console.log('图像加载完毕')
+    }
+    img.src = "https://codepen.io/yuanchuan/pen/YoqWeR/image/large.png"
+
+    //JSONP
+
+    function hhh(res) {
+      console.log(res)
+    }
+
+    var script = document.createElement("script");
+    script.src = "https://yeaseonzhang.github.io/atom.xml?callback=hhh";
+    document.body.insertBefore(script, document.body.firstChild)
+
+
+  </script>
+</body>
+
+</html>

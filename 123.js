@@ -1,58 +1,55 @@
-var data=[
-	{
-		"2014": 39678000,
-		"2015": 35341000,
-		"2016": 54288000,
-		"2017": 28860200,
-		"2018": 38910300,
-		"项目名称": "生产大修"
-	},
-	{
-		"2014": 50364000,
-		"2015": 92338000,
-		"2016": 141620000,
-		"2017": 64530900,
-		"2018": 80917100,
-		"项目名称": "生产技改"
-	},
-	{
-		"2014": 1175091100,
-		"2015": 432847100,
-		"2016": 984354200,
-		"2017": 496650000,
-		"2018": 572520000,
-		"项目名称": "电网基建"
-	},
-	{
-		"2014": 6200240,
-		"2015": 7396000,
-		"2016": 14960000,
-		"2017": 1978128,
-		"2018": 303000,
-		"项目名称": "电网信息化"
-	},
-	{
-		"2014": 116315000,
-		"2015": 78001100,
-		"2016": 24454460,
-		"2017": 1152000,
-		"2018": 14016200,
-		"项目名称": "电力营销投入"
-	}
-]
-console.log(data)
+function Scope() {
+  this.$$watchersCount = 0;
+  this.$$watchList = [];
+}
 
-let years = Object.keys(data[0]).map(x=>parseInt(x)).filter(x=>x===x)
-let data1 = data.map(x=>{
-    x.name = x['项目名称']
-    delete x['项目名称']
-    x.data = []
-    for(let year of years){
-        x.data.push(x[year])
-        delete x[year]
-    }
-    return x
+Scope.prototype.$watch = function (name, getNewValue, listener) {
+  var watch = {
+      name: name,
+      getNewValue: getNewValue,
+      listener: listener
+  };
+  this.$$watchList.push(watch);
+}
+
+Scope.prototype.$$digestOnce = function () {
+  var dirty;
+  var list = this.$$watchList;
+  for (var i = 0, l = list.length; i < l; i++) {
+      var watch = list[i];
+      var newValue = watch.getNewValue(this.name);
+      var oldValue = watch.last;
+      if (newValue !== oldValue) {
+          watch.listener(newValue, oldValue);
+          // 因为listener操作，已经检查过的数据可能变脏
+          dirty = true;
+      }
+      watch.last = newValue;
+  }
+  return dirty;
+};
+Scope.prototype.$digest = function () {
+  var dirty = true;
+  var checkTimes = 0;
+  while (checkTimes<10 && dirty) {
+      checkTimes++
+      dirty = this.$$digestOnce();
+  }
+};
+
+var scope = new Scope();
+scope.first = 1;
+scope.second = 10;
+scope.$watch('first', function () {
+    return scope[''+this.name]
+}, function (newValue, oldValue) {
+    scope.second++;
+    console.log('first:newValue:' + newValue + '~~~~' + 'oldValue:' + oldValue);
 })
-
-
-
+scope.$watch('second', function () {
+    return scope[''+this.name]
+}, function (newValue, oldValue) {
+    scope.first++;
+    console.log('second:newValue:' + newValue + '~~~~' + 'oldValue:' + oldValue);
+})
+scope.$digest();
