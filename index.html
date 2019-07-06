@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+</head>
+
+<body>
+
+  <div>
+    <div>
+      <div id="app" v-html="code">
+
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      code: `<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="js,result" data-slug-hash="byaMOZ"></p>`
+    }
+  })
+</script>
+
+</html>

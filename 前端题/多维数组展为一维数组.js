@@ -11,4 +11,14 @@ function getlist(list){
   }
 }
 getlist(list)
+
+var alist = Array.prototype.concat.apply([],list)  //一层
+var blist = list.flat(Infinity)
+var clist = list.reduce((x,y)=>{ //一层
+  return x.concat(y)
+},[])
+
+console.log(alist)
+console.log(blist)
+console.log(clist)
 console.log(newlist)
