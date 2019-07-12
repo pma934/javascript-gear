@@ -6,28 +6,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="https://static.codepen.io/assets/embed/ei.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://static.codepen.io/assets/embed/ei.js"></script> -->
 
 </head>
 
 <body>
 
-  <div>
-    <div>
-      <div id="app" v-html="code">
-
-      </div>
-    </div>
-  </div>
 </body>
 <script>
-  new Vue({
-    el: '#app',
-    data: {
-      code: `<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="js,result" data-slug-hash="byaMOZ"></p>`
-    }
-  })
+  function debounce(fn) {
+    var timeout = null; // 创建一个标记用来存放定时器的返回值
+    return function () {
+      clearTimeout(timeout); // 每当用户输入的时候把前一个 setTimeout clear 掉
+      timeout = setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+        fn.apply(this, arguments);
+      }, 500);
+    };
+  }
+  function sayHi() {
+    console.log('防抖成功',arguments);
+  }
+
+  function throttle(fn) {
+    var timeout = null; // 创建一个标记用来存放定时器的返回值
+    return function () {
+      timeout = timeout === null ? setTimeout(() => { // 然后又创建一个新的 setTimeout, 这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
+        fn.apply(this, arguments);
+        timeout = null
+      }, 500) : timeout;
+    };
+  }
+  window.onresize = throttle(sayHi)
+    // function(){
+    //   var p = 1
+    //   return function(){
+    //     console.log(p++)
+    //   }
+    // }()
 </script>
 
 </html>
