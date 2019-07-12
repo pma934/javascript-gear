@@ -8,26 +8,51 @@
   <title>Document</title>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="https://static.codepen.io/assets/embed/ei.js"></script>
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
 
+    .box1 {
+      float: left;
+      width: 95%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .box2 {
+      float: left;
+      width: 5%;
+    }
+  </style>
 </head>
 
 <body>
-
   <div>
-    <div>
-      <div id="app" v-html="code">
-
-      </div>
+    <div class="box1">
+      <span>123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123</span>
+    </div>
+    <div class="box2">
+      <button>123</button>
     </div>
   </div>
+  <!-- <iframe src="./原生XMLHttpRequest .html" frameborder="0" style="width:100vw;height:100vh"></iframe> -->
+  <script>
+    // Promise.resolve().then(() => console.log(2))
+    // new Promise((re, rj) => {
+    //   console.log(3);
+    //   re();
+    // }).then(() => console.log(4))
+    // setTimeout(() => {
+    //   console.log(3.5);
+    //   Promise.resolve().then(() => console.log(5));
+    //   setTimeout(() => console.log(7), 0)
+    // }, 0)
+    // setTimeout(() => console.log(6), 0)
+  </script>
 </body>
-<script>
-  new Vue({
-    el: '#app',
-    data: {
-      code: `<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="js,result" data-slug-hash="byaMOZ"></p>`
-    }
-  })
-</script>
 
 </html>
