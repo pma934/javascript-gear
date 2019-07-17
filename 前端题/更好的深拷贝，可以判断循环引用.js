@@ -1,18 +1,21 @@
-function deepClone(obj,hash = new WeakMap()){
-    if(obj instanceof RegExp) return new RegExp(obj);
-    if(obj instanceof Date) return new Date(obj);
-    if(obj === null ||typeof obj !== 'object'){
-        return obj;
+function deepClone(oldObj,hash = new WeakMap()){
+    if(oldObj instanceof RegExp) return new RegExp(oldObj);
+    if(oldObj instanceof Date) return new Date(oldObj);
+    if(oldObj === null ||typeof oldObj !== 'oldObject'){
+        return oldObj;
     }
-    if(hash.has(obj)){
-        return hash.get(obj);
+    if(hash.has(oldObj)){
+        return hash.get(oldObj);
     }
-    let t = new obj.constructor();//根据情况生成[]或者{}
-    hash.set(obj,t)
-    for(let key in obj){
-        t[key] = deepClone(obj[key],hash) 
+    let newObj = new oldObj.constructor();//根据情况生成[]或者{}
+    hash.set(oldObj,newObj)
+    for(let key in oldObj){
+        //可能会遍历到原型的对象
+        if(oldObj.hasOwnProperty(key)){
+          newObj[key] = deepClone(oldObj[key],hash) 
+        }
     }
-    return t
+    return newObj
 }
 
 
