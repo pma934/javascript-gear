@@ -269,16 +269,18 @@
             ospin.style.animationPlayState = (yes ? 'running' : 'paused');
         }
 
-        var sX, sY, nX, nY, desX = 0,
-            desY = 0,
+        var
             tX = 0,
             tY = 10;
         //     // ==================== Mouse Events ====================
         document.onmousedown = function (e) {
             clearInterval(obox.timer);
             e = e || window.event;
-            var sX = e.clientX,
+            var desX = 0,
+                desY = 0, 
+                sX = e.clientX,
                 sY = e.clientY;
+
 
             this.onmousemove = function (e) {
                 e = e || window.event;
@@ -288,41 +290,29 @@
                 desY = nY - sY;
                 tX += desX * 0.1;
                 tY += desY * 0.1;
-                applyTranform(obox);
+                requestAnimationFrame(() => applyTranform(obox));
                 sX = nX;
                 sY = nY;
             }
 
             this.onmouseup = function (e) {
                 this.onmousemove = this.onmouseup = null;
-                obox.timer = setTimeout(function () {
+                obox.timer = setInterval(function () {
                     desX *= 0.95;
                     console.log(desX)
                     desY *= 0.95;
                     tX += desX * 0.1;
                     tY += desY * 0.1;
-                    applyTranform(obox);
-                    // playSpin(false);
-                    if (Math.abs(desX) > 0.5 && Math.abs(desY) > 0.5) {
+                    requestAnimationFrame(() => applyTranform(obox));
+                    playSpin(false);
+                    if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
                         clearInterval(obox.timer);
-                        // playSpin(true);
+                        playSpin(true);
                     }
-                }, 16.66);
+                }, 16);
             }
 
             return false;
-        }
-
-        function animationInterval(fn) {
-            var once = function () {
-                requestAnimationFrame(function () {
-                    end=fn()
-                    if (!end) {
-                        return once()
-                    }
-                });
-            }
-            return once
         }
         // document.onmousewheel = function (e) {
         //     e = e || window.event;
