@@ -1,71 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="https://static.codepen.io/assets/embed/ei.js"></script>
-  <style>
-    body,
-    html {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+  <title></title>
+  <style type="text/css">
+    .item {
+      width: 100px;
+      height: 100px;
+      position: absolute;
     }
 
-    .box1 {
-      float: left;
-      width: 95%;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    #red {
+      background: red;
+      top: 0px;
+      left: 0px;
     }
 
-    .box2 {
-      float: left;
-      width: 5%;
+    #yellow {
+      background: yellow;
+      top: 541px;
+      left: 12px;
+    }
+
+    #blue {
+      background: blue;
+      top: 80px;
+      left: 120px;
     }
   </style>
 </head>
 
 <body>
-  <div>
-    <div class="box1">
-      <span>123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123</span>
-    </div>
-    <div class="box2">
-      <button>123</button>
-    </div>
-  </div>
-  <!-- <iframe src="./原生XMLHttpRequest .html" frameborder="0" style="width:100vw;height:100vh"></iframe> -->
+  <div id="red" class="item" draggable="true"></div>
+  <div id="yellow" class="item" draggable="true"></div>
+  <div id="blue" class="item" draggable="true"></div>
   <script>
-    var xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200 && xhr.status < 300 || xhr.status === 304) {
-          console.log('XMLHttpRequest:', xhr)
-          console.log(xhr.getAllResponseHeaders())
-        }
+    document.body.addEventListener("dragstart", function (e) {
+      var container = this;
+      target = e.target;
+      var x = e.clientX
+      var y = e.clientY
+      var top = e.target.offsetTop
+      var left = e.target.offsetLeft
+      function dragend(e) {
+        var dx = e.clientX - x
+        var dy = e.clientY - y
+        target.style.top = (top + dy) + 'px'
+        target.style.left = (left + dx) + 'px'
+        container.removeEventListener("dragend", dragend)
       }
-    }
-    xhr.open('get', 'http://localhost:3333/mockapi/people', true)
-    // xhr.setRequestHeader('Accept', 'application/json, text/plain, */*')
-    xhr.send(null)
-
-
-    // Promise.resolve().then(() => console.log(2))
-    // new Promise((re, rj) => {
-    //   console.log(3);
-    //   re();
-    // }).then(() => console.log(4))
-    // setTimeout(() => {
-    //   console.log(3.5);
-    //   Promise.resolve().then(() => console.log(5));
-    //   setTimeout(() => console.log(7), 0)
-    // }, 0)
-    // setTimeout(() => console.log(6), 0)
+      container.addEventListener("dragend", dragend)
+    })
   </script>
 </body>
 
