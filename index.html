@@ -1,57 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title></title>
-  <style type="text/css">
-    .item {
-      width: 100px;
-      height: 100px;
-      position: absolute;
-    }
-
-    #red {
-      background: red;
-      top: 0px;
-      left: 0px;
-    }
-
-    #yellow {
-      background: yellow;
-      top: 541px;
-      left: 12px;
-    }
-
-    #blue {
-      background: blue;
-      top: 80px;
-      left: 120px;
-    }
-  </style>
+  <meta charset="utf-8">
 </head>
 
 <body>
-  <div id="red" class="item" draggable="true"></div>
-  <div id="yellow" class="item" draggable="true"></div>
-  <div id="blue" class="item" draggable="true"></div>
+  <div id="app">
+    <rotate-card />
+    <rotate-card />
+  </div>
+  <script src="https://vuejs.org/js/vue.min.js"></script>
+  <script src="https://unpkg.com/zxz-ui@1.0.1/dist/zxz-ui.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/zxz-ui@1.0.1/dist/zxz-ui.css">
   <script>
-    document.body.addEventListener("dragstart", function (e) {
-      var container = this;
-      target = e.target;
-      var x = e.clientX
-      var y = e.clientY
-      var top = e.target.offsetTop
-      var left = e.target.offsetLeft
-      function dragend(e) {
-        var dx = e.clientX - x
-        var dy = e.clientY - y
-        target.style.top = (top + dy) + 'px'
-        target.style.left = (left + dx) + 'px'
-        container.removeEventListener("dragend", dragend)
-      }
-      container.addEventListener("dragend", dragend)
-    })
+    new Vue({
+      el: "#app",
+      data: {
+      },
+    });
   </script>
 </body>
 

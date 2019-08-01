@@ -18,7 +18,7 @@ function debounce(fn,...args){
     var timeout = null
     return function(){
         clearTimeout(timeout)
-        timeout = setTimeout(fn.bind(this,...args),3000)
+        timeout = setTimeout(fn.bind(this,...args),3000)    //等同于()=>{fn(...args)}
     }
 }
 
