@@ -12,7 +12,7 @@ function myNew(constructor,...arg){
     let obj ={}
     obj.__proto__ = constructor.prototype
     let res = constructor.apply(obj,arg)
-    return typeof res === 'object'?res:obj
+    return res instanceof Object?res:obj
 }
 var dog = myNew(Pet,6,'wowo')
 
@@ -35,12 +35,15 @@ Function.prototype.myCall = function(obj,...arg){
 }
 
 //自写 bind
-Function.prototype.myBind = function(obj,...arg1){
-    let fn = this
-    let res = function(...arg2){
-        return fn.apply(obj,arg1.concat(arg2))
-    }
-    return res
+Function.prototype.myBind = function(obj,...args){
+	// obj = obj?obj:window
+	let fn = this
+	return function(...args2){
+		obj.fn = fn
+		res = obj.fn(...args,...args2)
+		delete obj.fn
+		return res
+	}	
 }
 
 

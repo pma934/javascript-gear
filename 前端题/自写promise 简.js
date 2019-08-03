@@ -41,6 +41,7 @@ MyPromise.prototype.then = function (rsvFn, rjsFn) {
         this.rjsCb.push(rjsFn)
     }
     if (this.status === RSV) {
+        console.log('sync')
         rsvFn(this.value)
     }
     if (this.status === RJS) {
