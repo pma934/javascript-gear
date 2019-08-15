@@ -3,9 +3,9 @@
 // }
 
 //节流
-function throttle(fn, ...args) {
+function throttle(fn, t) {
     var timeout = null
-    return function (t = 1000) {
+    return function (...args) {
         timeout = timeout === null ? setTimeout(() => {
             timeout = null
             fn(...args)
@@ -14,9 +14,9 @@ function throttle(fn, ...args) {
 }
 
 //防抖
-function debounce(fn, ...args) {
+function debounce(fn, t) {
     var timeout = null
-    return function (t = 3000) {
+    return function (...args) {
         clearTimeout(timeout)
         timeout = setTimeout(fn.bind(this, ...args), t) //等同于()=>{fn(...args)}
     }
