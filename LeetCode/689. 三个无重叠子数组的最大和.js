@@ -20,7 +20,7 @@ var k = 1
 // };
 
 var maxSumOfThreeSubarrays = function (nums, k) {
-    //dp[i][n] 前i个数分割成n个数组的最大和                   |这后面是重复的判断内容  
+    //dp[i][n] 前i个数分割成n个数组的最大和                   |这后面是重复的结构  
     //dp[i][n] = max( dp[i-1][n] , dp[i-k][n-1]+[i-k+1,i] , dp[i-k-1][n-1]+[i-k,i-1] ,……，dp[(n-1)k][n-1]+[(n-1)k+1,nk] )
     //dp[i-1][n] = max( dp[i-2][n] , dp[i-k-1][n-2]+[i-k+,i-1] , dp[i-k-2][n-1]+[i-k-1,i-2] ,……，dp[(n-1)k][n-1]+[(n-1)k+1,nk] )
 
