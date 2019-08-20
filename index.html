@@ -1,149 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <style>
+    html {
+      height: 1300px;
+    }
+
+    body {
+      background-image: linear-gradient(to right top, #ffcc00 50%, #eee 50%);
+      background-size: 100% calc(100% - 100vh + 5px);
+      background-repeat: no-repeat;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 5px;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: #fff;
+      z-index: -1;
+    }
+
+    canvas {
+      border: 1px solid;
+    }
+  </style>
 </head>
 
 <body>
-  <button id="addNewObserver">Add New Observer checkbox</button>
-  <input id="mainCheckbox" type="checkbox" />
-  <div id="observersContainer"></div>
-
+  <button onclick="sleep()">sleep</button>
+  <button onclick="_clear()">clear</button>
+  <canvas id="drawing" width="200" height="200"></canvas>
+  <canvas id="drawing1" width="200" height="200"></canvas>
+  <canvas id="drawing2" width="200" height="200"></canvas>
   <script>
+    var drawing = document.getElementById('drawing')
+    var drawing1 = document.getElementById('drawing1')
+    var drawing2 = document.getElementById('drawing2')
 
-    function ObserverList() {
-      this.observerList = [];
+    var ctx = drawing.getContext("2d")
+    var ctx1 = drawing1.getContext("2d")
+    var ctx2 = drawing2.getContext("2d")
+
+    ctx.beginPath();
+    ctx1.beginPath();
+    ctx2.beginPath();
+    var i = 0, j = 0, k = 0
+
+    setInterval(() => {
+      i++
+      ctx.arc(100, 100, 50, (Math.PI / 90) * i, (Math.PI / 90) * (i + 1), false);
+      ctx.stroke();
+    }, 16.7);
+
+    setOut()
+    function setOut() {
+      setTimeout(() => {
+        j++
+        ctx1.arc(100, 100, 50, (Math.PI / 90) * j, (Math.PI / 90) * (j + 1), false);
+        ctx1.stroke();
+        setOut()
+      }, 16.7);
     }
 
-    ObserverList.prototype.Add = function (obj) {
-      return this.observerList.push(obj);
-    };
+    anmia()
+    function anmia() {
+      k++
+      requestAnimationFrame(() => {
+        ctx2.arc(100, 100, 50, (Math.PI / 90) * k, (Math.PI / 90) * (k + 1), false);
+        ctx2.stroke();
+        anmia()
+      })
+    }
 
-    ObserverList.prototype.Empty = function () {
-      this.observerList = [];
-    };
-
-    ObserverList.prototype.Count = function () {
-      return this.observerList.length;
-    };
-
-    ObserverList.prototype.Get = function (index) {
-      if (index > -1 && index < this.observerList.length) {
-        return this.observerList[index];
-      }
-    };
-
-    ObserverList.prototype.Insert = function (obj, index) {
-      var pointer = -1;
-
-      if (index === 0) {
-        this.observerList.unshift(obj);
-        pointer = index;
-      } else if (index === this.observerList.length) {
-        this.observerList.push(obj);
-        pointer = index;
-      }
-
-      return pointer;
-    };
-
-    ObserverList.prototype.IndexOf = function (obj, startIndex) {
-      var i = startIndex, pointer = -1;
-
-      while (i < this.observerList.length) {
-        if (this.observerList[i] === obj) {
-          pointer = i;
+    function sleep() {
+      console.log('sleep')
+      date = new Date()
+      while (1) {
+        if (new Date() - date >= 3000) {
+          break
         }
-        i++;
-      }
-
-      return pointer;
-    };
-
-    ObserverList.prototype.RemoveAt = function (index) {
-      if (index === 0) {
-        this.observerList.shift();
-      } else if (index === this.observerList.length - 1) {
-        this.observerList.pop();
-      }
-    };
-
-    // Extend an object with an extension
-    function extend(extension, obj) {
-      for (var key in extension) {
-        obj[key] = extension[key];
       }
     }
 
-
-    function Subject() {
-      this.observers = new ObserverList();
+    function _clear() {
+      drawing.width=drawing.width
+      drawing1.width=drawing1.width
+      drawing2.width=drawing2.width
     }
 
-    Subject.prototype.AddObserver = function (observer) {
-      this.observers.Add(observer);
-    };
-
-    Subject.prototype.RemoveObserver = function (observer) {
-      this.observers.RemoveAt(this.observers.IndexOf(observer, 0));
-    };
-
-    Subject.prototype.Notify = function (context) {
-      var observerCount = this.observers.Count();
-      for (var i = 0; i < observerCount; i++) {
-        this.observers.Get(i).Update(context);
-      }
-    };
-
-    function Observer() {
-      this.Update = function () {
-        // ...
-      };
-    }
-  </script>
-
-
-  <script>
-    var controlCheckbox = document.getElementById("mainCheckbox"),
-      addBtn = document.getElementById("addNewObserver"),
-      container = document.getElementById("observersContainer");
-
-    // 具体的被观察者
-
-    //Subject 类扩展controlCheckbox 类
-    extend(new Subject(), controlCheckbox);
-
-    //点击checkbox 将会触发对观察者的通知
-    controlCheckbox["onclick"] = new Function("controlCheckbox.Notify(controlCheckbox.checked)");
-
-    addBtn["onclick"] = AddNewObserver;
-
-    // 具体的观察者(是一个函数)
-
-    function AddNewObserver() {
-
-      //建立一个新的用于增加的checkbox
-      var check = document.createElement("input");
-      check.type = "checkbox";
-
-      // 使用Observer 类扩展checkbox
-      extend(new Observer(), check);
-
-      // 使用定制的Update函数重载
-      check.Update = function (value) {
-        this.checked = value;
-      };
-
-      // 增加新的观察者到我们主要的被观察者的观察者列表中
-      controlCheckbox.AddObserver(check);
-
-      // 将元素添加到容器的最后
-      container.appendChild(check);
-    }
 
   </script>
 </body>
