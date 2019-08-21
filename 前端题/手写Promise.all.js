@@ -2,6 +2,9 @@
 Promise.all = function (promises) {
     let resolveList = []
     return new Promise((resolve, reject) => {
+        if(promises.length === 0){ //promises为空数组的情况下，会返回resolve([])
+            resolve(resolveList)
+        }
         promises.forEach(p => {
             Promise.resolve(p).then(re => {
                 resolveList.push(re)
@@ -29,4 +32,5 @@ var d = new Promise((resolve,reject)=>{
     resolve('d')
 })
 
-Promise.all([2,a,b,c,d]).then(res=>console.log(res),err=>console.log(err))
+// Promise.all([2,a,b,c,d]).then(res=>console.log(res),err=>console.log(err))
+Promise.all([]).then(res=>console.log(res),err=>console.log(err))
