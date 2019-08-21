@@ -12,26 +12,28 @@ function readline() {
 }
 
 
+
+
 //init
 var peoples = [readline()]
 var len = +readline()
-var arrs = new Array(len).fill(1)
+var sets = new Array(len).fill(1).map(_ => new Set())
 for (let i = 0; i < len; i++) {
-    arrs[i] = readline().split(',')
+    readline().split(',').map(x => sets[i].add(x))
 }
 
 //
 for (let i = 0; i < peoples.length; i++) {
     let people = peoples[i]
-    for (let j = 0; j < arrs.length; j++) {
-        let arr = arrs[j]
-        if(arr.indexOf(people)!==-1){
-            arr.forEach(i => {
+    for (let j = 0; j < sets.length; j++) {
+        let set = sets[j]
+        if (set.has(people)) {
+            set.forEach(i => {
                 if (peoples.indexOf(i) === -1) {
                     peoples.push(i)
                 }
             })
-            arrs.splice(j,1)
+            sets.splice(j,1)
             j--
         }
     }
