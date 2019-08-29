@@ -1,97 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <style>
-    html {
-      height: 1300px;
-    }
-
-    body {
-      background-image: linear-gradient(to right top, #ffcc00 50%, #eee 50%);
-      background-size: 100% calc(100% - 100vh + 5px);
-      background-repeat: no-repeat;
-    }
-
-    body::after {
-      content: "";
-      position: fixed;
-      top: 5px;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: #fff;
-      z-index: -1;
-    }
-
-    canvas {
-      border: 1px solid;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 
 <body>
-  <button onclick="sleep()">sleep</button>
-  <button onclick="_clear()">clear</button>
-  <canvas id="drawing" width="200" height="200"></canvas>
-  <canvas id="drawing1" width="200" height="200"></canvas>
-  <canvas id="drawing2" width="200" height="200"></canvas>
   <script>
-    var drawing = document.getElementById('drawing')
-    var drawing1 = document.getElementById('drawing1')
-    var drawing2 = document.getElementById('drawing2')
-
-    var ctx = drawing.getContext("2d")
-    var ctx1 = drawing1.getContext("2d")
-    var ctx2 = drawing2.getContext("2d")
-
-    ctx.beginPath();
-    ctx1.beginPath();
-    ctx2.beginPath();
-    var i = 0, j = 0, k = 0
-
-    setInterval(() => {
-      i++
-      ctx.arc(100, 100, 50, (Math.PI / 90) * i, (Math.PI / 90) * (i + 1), false);
-      ctx.stroke();
-    }, 16.7);
-
-    setOut()
-    function setOut() {
-      setTimeout(() => {
-        j++
-        ctx1.arc(100, 100, 50, (Math.PI / 90) * j, (Math.PI / 90) * (j + 1), false);
-        ctx1.stroke();
-        setOut()
-      }, 16.7);
-    }
-
-    anmia()
-    function anmia() {
-      k++
-      requestAnimationFrame(() => {
-        ctx2.arc(100, 100, 50, (Math.PI / 90) * k, (Math.PI / 90) * (k + 1), false);
-        ctx2.stroke();
-        anmia()
-      })
-    }
-
-    function sleep() {
-      console.log('sleep')
-      date = new Date()
-      while (1) {
-        if (new Date() - date >= 3000) {
-          break
-        }
-      }
-    }
-
-    function _clear() {
-      drawing.width=drawing.width
-      drawing1.width=drawing1.width
-      drawing2.width=drawing2.width
-    }
-
-
+    // fetch('https://jsonplaceholder.typicode.com', { method: 'OPTIONS' })
+    fetch('https://www.nowcoder.com/discuss/231819?type=0&order=0&pos=3&page=1', { method: 'GET' })
+      .then(response => response.json())
+      .then(json => console.log(json))
   </script>
 </body>
 

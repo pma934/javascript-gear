@@ -7,6 +7,28 @@ function Pet(age,name){
 
 var cat = new Pet(4,'coco')
 
+//自写 flat
+Array.prototype.flat = function (n = 1) {
+    let arr = this
+    if (arr.length === 0 || !Array.isArray(arr)) {
+        return arr
+    }
+    for (let i = 0; i < n; i++) {
+        let newArr = []
+        let flag = true
+        for (let v of arr) {
+            flag = Array.isArray(v) ? false : true
+            newArr = newArr.concat(v)
+        }
+        arr = newArr
+        if (flag) {
+            break;
+        }
+    }
+    return arr
+}
+
+
 //自写 new
 function myNew(constructor,...arg){
     let obj ={}
