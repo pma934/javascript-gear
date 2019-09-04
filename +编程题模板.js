@@ -1,8 +1,9 @@
 const III = [
-    'AAA'
+    'AAA',
+    'CCC'
 ]
 const PPP = [
-    'CCC'
+    '1'
 ]
 //----------------输入输出-------------------
 let III_INDEX = 0
@@ -23,3 +24,8 @@ function print(x) {
 }
 //----------------程序部分-------------------
 
+var a = readline()
+var b = readline()
+console.log(a)
+console.log(b)
+print(1)

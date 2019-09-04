@@ -17,3 +17,4 @@ function StrLen(str){
 }
 
 var p = StrLen('asdsaddsasasdfs')
+console.log(p)

@@ -4,6 +4,7 @@
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
       
         {
             "type": "node",
@@ -16,6 +17,12 @@
             "request": "launch",
             "name": "Solution",
             "program": "${workspaceFolder}/123.js",
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "编程题",
+            "program": "${workspaceFolder}/+编程题模板.js",
         }
     ]
 }
