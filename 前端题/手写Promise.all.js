@@ -5,9 +5,9 @@ Promise.all = function (promises) {
         if(promises.length === 0){ //promises为空数组的情况下，会返回resolve([])
             resolve(resolveList)
         }
-        promises.forEach(p => {
+        promises.forEach((p,i) => {
             Promise.resolve(p).then(re => {
-                resolveList.push(re)
+                resolveList[i] = re
                 if (promises.length === resolveList.length) {
                     //因为promise异步的原因，还是得放里面
                     resolve(resolveList)
@@ -19,18 +19,26 @@ Promise.all = function (promises) {
     })
 }
 
-var a = new Promise((resolve,reject)=>{
-    resolve('1')
+var a = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('3')
+    },300)
 })
-var b = new Promise((resolve,reject)=>{
-    resolve('3')
+var b = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('2')
+    },200)
 })
-var c = new Promise((resolve,reject)=>{
-    resolve('c')
+var c = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('1')
+    },100)
 })
-var d = new Promise((resolve,reject)=>{
-    resolve('d')
+var d = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('4')
+    },400)
 })
 
-// Promise.all([2,a,b,c,d]).then(res=>console.log(res),err=>console.log(err))
-Promise.all([]).then(res=>console.log(res),err=>console.log(err))
+Promise.all([a, b, c, d]).then(res => console.log(res), res => console.log(res))
+//Promise.all([]).then(res=>console.log(res),err=>console.log(err))
