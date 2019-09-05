@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <style>
+        .container {
+            float: left;
+            width: 40%;
+            margin: 5px 5%;
+            min-height: 200px;
+            border: 1px solid;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .box1 {
+            border: 1px solid blue;
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+        }
+
+        .test1 {
+            clear: both;
+            float: left;
+        }
+
+        .box2 {
+            border: 1px solid blue;
+            width: 200px;
+            height: 200px;
+            margin: 20px;
+            float: left;
+        }
+
+        .text2 {
+            float: left;
+            /*   overflow:auto; */
+            /*   display:inline-block; */
+            /*   position:absolute; */
+            /*   position:fixed; */
+            /*   display:flex; */
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="container">
+            <div class="box1"></div>
+            <div class="box1"></div>
+        </div>
+        <div class="container">
+            <div class="box1 test1">防止 margin 重叠 (同一个BFC内的两个两个相邻Box的 margin 会发生重叠，触发生成两个BFC，即不会重叠)</div>
+            <div class="box1 test1">防止 margin 重叠 (同一个BFC内的两个两个相邻Box的 margin 会发生重叠，触发生成两个BFC，即不会重叠)</div>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="container">
+            <div style="border:1px solid red">
+                <div class="box2"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div style="border:1px solid red" class="text2">
+                <div class="box2">清除内部浮动 (创建一个新的 BFC，因为根据 BFC 的规则，计算 BFC 的高度时，浮动元素也参与计算)</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</body>
+
+</html>
