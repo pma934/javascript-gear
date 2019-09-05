@@ -2,19 +2,26 @@ function Promise(fn) {
     let that = this
     this.resolvedCb = []
     this.rejectedCb = []
+    this.state = 'pending'
 
     let resolve = function (value) {
-        if (value instanceof Promise) {
+        if (value instanceof Promise) { //解决resolve包裹promise的问题
             value.then(resolve, reject)
         } else {
             queueMicrotask(() => {
-                that.resolvedCb.forEach(cb => cb(value))
+                if (that.state === 'pending') {
+                    that.state = 'resolved'
+                    that.resolvedCb.forEach(cb => cb(value))
+                }
             })
         }
     }
     let reject = function (reason) {
         queueMicrotask(() => {
-            that.rejectedCb.forEach(cb => cb(reason))
+            if (that.state === 'pending') {
+                that.state = 'rejected'
+                that.rejectedCb.forEach(cb => cb(reason))
+            }
         })
     }
     try {
@@ -24,6 +31,7 @@ function Promise(fn) {
     }
 }
 Promise.prototype.then = function (onFulfilled, onRejected) {
+    //解决透传的问题
     onFulfilled = onFulfilled instanceof Function ? onFulfilled : r => r
     onRejected = onRejected instanceof Function ? onRejected : r => {
         throw r
@@ -46,27 +54,13 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
     })
 }
 
+
 console.log('a')
 new Promise((resolve, reject) => {
         reject(1)
+        resolve(1)
     }).then().then()
     .then(res => console.log('res', res),
         err => console.log('err', err)
     )
-console.log('b')
-new Promise((resolve, reject) => {
-    resolve(new Promise((re, rj) => {
-        rj(2)
-    }))
-}).then(res => console.log('res', res),
-    err => console.log('err', err)
-)
-console.log('c')
-new Promise((resolve, reject) => {
-    reject(new Promise((re, rj) => {
-        rj(3)
-    }))
-}).then(res => console.log('res', res),
-    err => console.log('err', err)
-)
 console.log('d')
