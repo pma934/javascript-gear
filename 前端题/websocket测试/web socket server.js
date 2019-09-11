@@ -26,8 +26,9 @@ function websocket_add_listener(client_sock) {
 	// 不会出现粘包的情况，send一次，就会把send的数据独立封包。
 	// 如果我们是直接基于TCP，我们要自己实现类似于websocket封包协议就可以完全达到一样的效果；
 	client_sock.on("message", function (data) {
-		console.log(data);
-		client_sock.send("Thank you!");
+		data = JSON.parse(data)
+		console.table(data);
+		client_sock.send(JSON.stringify({msg:`${data.name}今年${data.age}`,type:"message"}));
 	});
 	// end 
 }

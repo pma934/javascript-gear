@@ -6,60 +6,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <style>
-    img {
-      width: 23%;
-      margin: .5%;
-      min-height: 200px;
-    }
-  </style>
 </head>
 
 <body>
-  <div id="app">
-    <img v-for="s in srcs" :[s.attr]="s.src" :data-index="s.index">
-  </div>
+  <form action="">
+    <label for="name">姓名：</label><input id="name" type="text">
+    <br>
+    <label for="age">年龄：</label><input id="age" type="text">
+    <br>
+    <label for="file">文件：</label><input id="file" type="file">
+    <br>
+    <button type="button" onclick="sendAjax()">ajax发送</button>
+    <button>form发送</button>
+  </form>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
   <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        srcs: null,
-      },
-      created() {
-        this.srcs = new Array(100).fill(null).map((v, i) => {
-          return {
-            index: i,
-            src: `http://dummyimage.com/cga/7752f9/eeeeee&text=${i + 1}`,
-            attr: 'lazy-src'
-          }
-        })
-      },
-      mounted() {
-        let that = this
-        var io = new IntersectionObserver(function (changes) {
-          changes.forEach(change => {
-            if (change.isIntersecting) {
-              console.log(change.target)
-              let node = change.target;
-              let index = node.dataset.index;
-              let elem = that.srcs[index]
-              Vue.set(elem, 'attr', 'src')
-              io.unobserve(node);
-            }
-          });
-        });
-
-        Vue.nextTick(function () {
-          let nodelist = document.querySelectorAll('img')
-          Array.from(nodelist).forEach(node => {
-            io.observe(node);
-          });
-        })
+    const xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200 && xhr.status < 300 || xhr.status === 304) {
+          console.log('XMLHttpRequest:', xhr)
+          console.log(xhr.getAllResponseHeaders())
+        }
       }
-    })
+    }
 
+    function ajax(method, url, data) {
+      xhr.open(method, url, true)
+      xhr.send(data)
+    }
+
+    function sendAjax() {
+      let name = document.getElementById('name').value
+      let age = document.getElementById('age').value
+      let formdata = new FormData()
+      formdata.append('name',name)
+      formdata.append('age',age)
+      ajax('post', 'http://localhost:3333/mockapi', formdata)
+      return false
+    }
+    
+    
+    
   </script>
 </body>
 

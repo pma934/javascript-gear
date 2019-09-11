@@ -1,4 +1,4 @@
-
+//4个人身高已知，最大高度差为8，求排序有多少重
 var N = 4,M = 8,heights = [5,16,8,10];
 var can = heights.slice(1)
 var people = heights.slice(0,1)

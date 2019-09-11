@@ -9,8 +9,12 @@
 </head>
 
 <body>
-  <input id="connection" type="text" name="" id=""> <button onclick="onconnection()">连接</button>
-  <input id="send" type="text"> <button onclick="onsend()">发送</button>
+  <button onclick="onconnection()">连接</button>
+  <br>
+  <label for="name">姓名</label><input id="name" type="text">
+  <label for="age">年龄</label><input id="age" type="text">
+  <br>
+  <button onclick="onsend()">发送</button>
 </body>
 <script>
   var socket;
@@ -28,10 +32,13 @@
     }
     socket.onmessage = function (msg) {
       console.log(msg)
+      console.table(JSON.parse(msg.data))
     }
   }
   function onsend() {
-    socket.send('你好！')
+    let name = document.getElementById('name').value
+    let age = document.getElementById('age').value
+    socket.send(JSON.stringify({ name: name, age: age }))
   }
 </script>
 

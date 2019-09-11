@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    img {
+      width: 23%;
+      margin: .5%;
+      min-height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <img v-for="s in srcs" :[s.attr]="s.src" :data-index="s.index">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        srcs: null,
+      },
+      created() {
+        this.srcs = new Array(100).fill(null).map((v, i) => {
+          return {
+            index: i,
+            src: `http://dummyimage.com/cga/7752f9/eeeeee&text=${i + 1}`,
+            attr: 'lazy-src'
+          }
+        })
+      },
+      mounted() {
+        let that = this
+        var io = new IntersectionObserver(function (changes) {
+          changes.forEach(change => {
+            if (change.isIntersecting) {
+              console.log(change.target)
+              let node = change.target;
+              let index = node.dataset.index;
+              let elem = that.srcs[index]
+              Vue.set(elem, 'attr', 'src')
+              io.unobserve(node);
+            }
+          });
+        });
+
+        Vue.nextTick(function () {
+          let nodelist = document.querySelectorAll('img')
+          Array.from(nodelist).forEach(node => {
+            io.observe(node);
+          });
+        })
+      }
+    })
+
+  </script>
+</body>
+
+</html>
