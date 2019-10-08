@@ -6,6 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style>
+    .alert{
+      height:100px;
+      width:100px;
+      background: black;
+      position:fixed;
+      left:50%;
+      right:50%;
+      transition:5s;
+      opacity: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -17,8 +29,10 @@
     <label for="file">文件：</label><input id="file" type="file">
     <br>
     <button type="button" onclick="sendAjax()">ajax发送</button>
-    <button>form发送</button>
+    <button >form发送</button>
   </form>
+  <button onclick="showAlert()">form发送</button>
+  <div class="alert" id="alert">123</div>
 
   <script>
     const xhr = new XMLHttpRequest()
@@ -46,8 +60,10 @@
       return false
     }
     
-    
-    
+    function showAlert(){
+      let div = document.getElementById('alert')
+      div.style.opacity = 1;
+    }
   </script>
 </body>
 

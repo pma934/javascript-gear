@@ -1,0 +1,36 @@
+<html>
+<head>
+  <style>
+    .div1 {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      background-color: black;
+      z-index: 1;
+    }
+    .div2 {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      background-color: blue;
+      left: 0px;
+      top: 0px;
+      z-index: 1;
+    }
+    .div3 {
+      width: 200px;
+      height: 200px;
+      position: fixed;
+      background-color: red;
+      left: 0px;
+      top: 0px;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="div1"></div>
+  <div class="div2"></div>
+  <div class="div3"></div>
+</body>
+</html>

@@ -12,7 +12,7 @@
 
 
 var validIPAddress = function(IP) {
-    const ipv4 = /^((\d|[1-9]\d|1\d\d|2([0-4]\d|25[0-5]))\.){4}$/;
+    const ipv4 = /^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){4}$/;
     const ipv6 = /^(([\da-fA-F]{1,4}):){8}$/;
     return ipv4.test(IP + ".") ? "IPv4" : ipv6.test(IP + ":") ? "IPv6" : "Neither";
 };
