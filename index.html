@@ -21,7 +21,7 @@
 </head>
 
 <body>
-  <form action="">
+  <form action="http://localhost:3000" method="post" id="form">
     <label for="name">姓名：</label><input id="name" type="text">
     <br>
     <label for="age">年龄：</label><input id="age" type="text">
@@ -29,7 +29,11 @@
     <label for="file">文件：</label><input id="file" type="file">
     <br>
     <button type="button" onclick="sendAjax()">ajax发送</button>
+<<<<<<< HEAD
     <button >form发送</button>
+=======
+    <button type="submit">form发送</button>
+>>>>>>> d27dfd805493da094561b357d2c49b55c6b72a16
   </form>
   <button onclick="showAlert()">form发送</button>
   <div class="alert" id="alert">123</div>
@@ -53,17 +57,22 @@
     function sendAjax() {
       let name = document.getElementById('name').value
       let age = document.getElementById('age').value
+      let file = document.getElementById('file').files[0]
       let formdata = new FormData()
-      formdata.append('name',name)
-      formdata.append('age',age)
-      ajax('post', 'http://localhost:3333/mockapi', formdata)
+      formdata.append('name', name)
+      formdata.append('age', age)
+      formdata.append('file', file)
+      ajax('post', 'http://127.0.0.1:3000', formdata)
       return false
     }
+<<<<<<< HEAD
     
     function showAlert(){
       let div = document.getElementById('alert')
       div.style.opacity = 1;
     }
+=======
+>>>>>>> d27dfd805493da094561b357d2c49b55c6b72a16
   </script>
 </body>
 

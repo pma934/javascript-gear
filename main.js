@@ -50,11 +50,11 @@ console.log('Static root dir: ' + root);
 //获取本地存储文件的目录，默认就是当前目录
 
 var server = http.createServer(function(request, response){
+    console.log(request)
     var pathname = url.parse(request.url).pathname;
     //使用url.parse解析请求中的相对地址，比如其中pathname对应的就是相对地址
     var filepath = path.join(root, pathname);
     //root+pathname是绝对地址
-
     fs.stat(filepath, function(err, stats){
         // 创建读取文件状态的异步函数，读取结束后判断是否出错以及如何处理
         if (!err && stats.isFile()){
