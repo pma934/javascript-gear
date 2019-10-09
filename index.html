@@ -7,36 +7,31 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    .alert{
-      height:100px;
-      width:100px;
+    .alert {
+      height: 100px;
+      width: 100px;
       background: black;
-      position:fixed;
-      left:50%;
-      right:50%;
-      transition:5s;
+      position: fixed;
+      left: 50%;
+      right: 50%;
+      transition: 5s;
       opacity: 0;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
   <form action="http://localhost:3000" method="post" id="form">
-    <label for="name">姓名：</label><input id="name" type="text">
+    <label for="name">姓名：</label><input name="name" id="name" type="text">
     <br>
-    <label for="age">年龄：</label><input id="age" type="text">
+    <label for="age">年龄：</label><input name="age" id="age" type="text">
     <br>
     <label for="file">文件：</label><input id="file" type="file">
     <br>
     <button type="button" onclick="sendAjax()">ajax发送</button>
-<<<<<<< HEAD
-    <button >form发送</button>
-=======
-    <button type="submit">form发送</button>
->>>>>>> d27dfd805493da094561b357d2c49b55c6b72a16
+    <button type="button" onclick="sendForm()">form发送</button>
   </form>
-  <button onclick="showAlert()">form发送</button>
-  <div class="alert" id="alert">123</div>
 
   <script>
     const xhr = new XMLHttpRequest()
@@ -51,6 +46,8 @@
 
     function ajax(method, url, data) {
       xhr.open(method, url, true)
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+      xhr.setRequestHeader('Origin','https://3ds.pokemon-gl.com')
       xhr.send(data)
     }
 
@@ -63,16 +60,12 @@
       formdata.append('age', age)
       formdata.append('file', file)
       ajax('post', 'http://127.0.0.1:3000', formdata)
-      return false
     }
-<<<<<<< HEAD
-    
-    function showAlert(){
-      let div = document.getElementById('alert')
-      div.style.opacity = 1;
+
+    function sendForm() {
+      ajax('post', 'https://3ds.pokemon-gl.com/frontendApi/matchup/getInternetMatchupPokemonRanking', 'languageId=9&wifimatchupId=4141&displayNumber=50&timezone=CEST&timeStamp=1570623586327')
     }
-=======
->>>>>>> d27dfd805493da094561b357d2c49b55c6b72a16
+
   </script>
 </body>
 
